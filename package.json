@@ -4,10 +4,10 @@
   "description": "",
   "main": "src/js/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "./node_modules/.bin/webpack-dev-server --inline --hot",
     "build:dev": "./node_modules/.bin/webpack -d",
-    "start": "npm run start:dev"
+    "start": "npm run start:dev",
+    "test": "karma start --singleRun false"
   },
   "keywords": [
     "LG"
@@ -33,6 +33,8 @@
     "file-loader": "^0.9.0",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.22.0",
+    "istanbul": "^0.4.4",
+    "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
     "json-loader": "^0.5.4",
     "karma": "^1.1.0",
@@ -40,6 +42,8 @@
     "karma-coverage": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.1",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-sourcemap-writer": "^0.1.2",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^1.7.0",
     "node-sass": "^3.8.0",

@@ -8,6 +8,11 @@ const makeFileLoader = function (pattern) {
   };
 };
 
+export const istanbulInstrumenter = {
+  test: /^(.(?!\.test))*\.ts$/,
+  loader: 'istanbul-instrumenter-loader',
+};
+
 export const tslint = {
   test: /\.ts$/,
   loader: 'tslint',
