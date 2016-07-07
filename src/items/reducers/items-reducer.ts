@@ -14,6 +14,8 @@ export const itemsReducer: any = (state: any = {}, { type, payload }) => {
       });
     case itemListReducerTypes.delete_item:
       return state.filter(element => element.id !== payload.id);
+      // case itemListReducerTypes.fetch_items:
+      //   return state.filter(element => element.id !== payload.id);
     default: return state;
   }
 };

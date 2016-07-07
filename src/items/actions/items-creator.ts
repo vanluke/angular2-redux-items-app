@@ -31,10 +31,10 @@ export const deleteItem = function (state = [], payload: any = {})
     };
 };
 
-export const fetchItem = function (state = [], payload: any = {})
+export const fetchItems = function (state = [])
   : IItemReducer {
     return {
       type: itemsConsts.fetch_items,
-      payload: [...state, payload]
+      payload: [...state]
     };
 };
