@@ -4,9 +4,9 @@ import selectedItemTypes from '../item-selected-consts';
 import { IItem } from '../item';
 
 describe('selectedItem reducer', () => {
-  it('return undefined by default', () => {
+  it('return object by default', () => {
     const defaultState = selectedItem(undefined, { type: 'test', payload: {}});
-    expect(defaultState).toBe(undefined);
+    expect(defaultState).toEqual({});
   });
   it('return state for unknown type', () => {
     const item: IItem = {

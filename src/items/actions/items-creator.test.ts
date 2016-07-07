@@ -9,8 +9,8 @@ describe('action createors', () => {
     const addItemAction =  addItem(undefined,
       { id: 1, description: 'text', name: 'name' });
       expect(addItemAction).not.toBeNull();
-      expect(addItemAction.payload)
-      .toContain(jasmine.objectContaining({ name : 'name' }));
+      expect(addItemAction.payload.id)
+      .toEqual(1);
     });
 
     it('update_item', () => {
