@@ -1,6 +1,6 @@
 import selectedItemTypes from '../item-selected-consts';
 
-export const selectedItem = (state: any = undefined,
+export const selectedItem = (state: any = {},
    { type, payload }) => {
   switch (type) {
     case selectedItemTypes.select_item:

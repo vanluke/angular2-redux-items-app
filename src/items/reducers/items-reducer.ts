@@ -2,6 +2,7 @@ import itemListReducerTypes from '../items-consts';
 import { IItem } from '../item';
 
 export const itemsReducer: any = (state: any = {}, { type, payload }) => {
+  console.log([...state, payload]);
   switch (type) {
     case itemListReducerTypes.add_item:
       return [...state, payload];

@@ -5,7 +5,7 @@ import { IItemReducer } from '../reducers/item-reducers';
 export const addItem = function (state = [], payload: any = {}): IItemReducer {
   return {
     type: itemsConsts.add_item,
-    payload: [...state, payload]
+    payload: payload
   };
 };
 
