@@ -1,33 +1,59 @@
-import { Injectable, Inject, Component } from '@angular/core';
+import { Injectable, Inject, Component,
+  ChangeDetectionStrategy } from '@angular/core';
 import { addItem, updateItem,
-  deleteItem, fetchItem } from '../actions/items-creator';
-
+  deleteItem, fetchItems } from '../actions/items-creator';
+import { ItemsService } from '../services/items-service';
+import { IItem } from '../item';
   @Component({
     selector: 'app',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `<h1>{{ title }}</h1>`
   })
   @Injectable()
   export class ItemsComponent {
-    constructor (@Inject('ItemsStore') private itemsStore) {
-      this.itemsStore = itemsStore;
-      this.unsubscribe = this.itemsStore.subscribe(() => {
-        const state = this.itemsStore.getState();
-        this.items = state.itemsReducer;
+    constructor (@Inject('ItemsStore') private itemsStore,
+    private itemsService: ItemsService) {
+    }
+
+    connectToStore (itemsStore, state, items) {
+      return itemsStore.connect(() => {
+        state = itemsStore.getState();
+        items(state.itemsReducer);
       });
     }
 
     ngOnInit () {
-       this.itemsStore.dispatch(fetchItems(this.items));
+       this.unsubscribe = this.connectToStore(this.itemsStore,
+         this.state,
+         this.setItems.bind(this));
+       this.itemsStore.dispatch(fetchItems());
     }
 
     private addItem () {
-      // this.itemsStore.dispatch(addItem(this.items, { name: 'this is name', id: 1, description: 'abc' }));
+    //  this.itemsStore.dispatch(addItem({ name: 'this is name', id: 1, description: 'abc' }));
     }
 
-    get _items() {
-      return this.items;
+    private removeItem () {
+      //this.itemsStore.dispatch(deleteItem({ name: 'this is name', id: 1, description: 'abc' }));
     }
+
+    private updateItem () {
+      // this.itemsStore.dispatch(updateItem(this.items,
+      //   { name: 'this is name is changed',
+      //   id: 1, description: 'abc changed' }));
+    }
+
+    public get items() {
+      return this._items;
+    }
+
+    setItems(value: any) {
+      const { items } = value;
+      this._items = [...items];
+    }
+
+    state: any;
     unsubscribe: any;
-    items: any[] = [];
+    _items: IItem[] = [];
     title: string = 'Welcome Items';
   }

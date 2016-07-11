@@ -37,15 +37,15 @@ describe ('items service', () => {
     ];
   });
 
-  it ('fetch items', async(inject([ItemsService, MockBackend], (service, mockBackend) => {
+  it ('fetch items',
+  async(inject([ItemsService, MockBackend], (service, mockBackend) => {
     mockBackend.connections.subscribe((connection: MockConnection) => {
       expect(connection.request.method).toBe(RequestMethod.Get);
       expect(connection.request.url).toBe('http://localhost:1337/api/v0/items');
 
       connection.mockRespond(new Response(new ResponseOptions({
         body: {
-          type: itemsConsts.fetch_items,
-          payload: [{
+          items: [{
             id: 1,
             name: 'name',
             description: 'description'
@@ -56,7 +56,7 @@ describe ('items service', () => {
 
     service.getItems().subscribe(items => {
         expect(items).not.toBe(undefined);
-        expect(items.payload).toContain(jasmine.objectContaining({ id: 1 }));
+        expect(items.items).toContain(jasmine.objectContaining({ id: 1 }));
     });
   })));
 });

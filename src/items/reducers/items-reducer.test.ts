@@ -5,7 +5,7 @@ import { IItem } from '../item';
 
 describe('list item reducer', () => {
   it('reducer return empty object by default.', () => {
-    const reducer = itemsReducer(undefined, { type: 'type', payload: {} });
+    const reducer = itemsReducer({}, { type: 'type', payload: {} });
     expect(reducer).toEqual({});
   });
 
@@ -13,9 +13,9 @@ describe('list item reducer', () => {
     const reducer = itemsReducer([{}],
       { type: itemReducerTypes.add_item, payload: {} });
     expect(reducer).not.toBeNull();
-    expect(reducer.length).toBeGreaterThan(1);
+    expect(reducer.items.length).toBeGreaterThan(1);
   });
-
+  //
   it('reducer return new item collection with \
     updated item for update_item type.', () => {
     const item: IItem = {
@@ -23,14 +23,15 @@ describe('list item reducer', () => {
       name: 'this is name',
       description: 'this is description'
     };
-    const reducer = itemsReducer([item],
+    const reducer = itemsReducer({ items: [item] },
       {
         type: itemReducerTypes.update_item,
         payload: { id: 1, name: 'new name' } });
     expect(reducer).not.toBeNull();
-    expect(reducer).toContain(jasmine.objectContaining({ name : 'new name' }));
+    expect(reducer.items)
+      .toContain(jasmine.objectContaining({ name : 'new name' }));
   });
-
+  //
   it('reducer return new items without \
     deleted one for delete_item type.', () => {
     const item: IItem = {
@@ -43,10 +44,10 @@ describe('list item reducer', () => {
       name: 'this is name 2',
       description: 'this is description 3'
     };
-    const reducer = itemsReducer([item, item2],
+    const reducer = itemsReducer({ items: [item, item2] },
       { type: itemReducerTypes.delete_item, payload: { id: 2} });
     expect(reducer).not.toBeNull();
-    expect(reducer.length).toEqual(1);
-    expect(reducer).not.toContain(jasmine.objectContaining({ id: 2 }));
+    expect(reducer.items.length).toEqual(1);
+    expect(reducer.items).not.toContain(jasmine.objectContaining({ id: 2 }));
   });
 });
