@@ -6,8 +6,7 @@ import { ItemsService } from '../services/items-service';
 import { IItem } from '../item';
 import { ItemComponent } from './item.component';
   @Component({
-    selector: 'app',
-    directives: [ItemComponent],
+    selector: 'items',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `<h1>{{ title }}</h1>`
   })
@@ -28,6 +27,7 @@ import { ItemComponent } from './item.component';
        this.unsubscribe = this.connectToStore(this.itemsStore,
          this.state,
          this.setItems.bind(this));
+
        this.itemsStore.dispatch(fetchItems());
     }
 
