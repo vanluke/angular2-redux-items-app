@@ -1,12 +1,18 @@
-import { Input, Component } from '@angular/core';
+import { Input, Component, ChangeDetectionStrategy } from '@angular/core';
 import { IItem } from '../item';
 
 @Component({
-  selector: 'item',
+  selector: 'item-element',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div>
-    <h3>{{ item.name }}</h3>
-    <textarea>{{ item.name }}</textarea>
-  </div>>`
+    <div>
+      <label>{{ item.id }}</label>
+      <input [(ngModel)]="item.name" type="text" />
+    </div>
+    <div>
+      <textarea [(ngModel)]="item.description"></textarea>
+    </div>
+  </div>`
 })
 export class ItemComponent {
   @Input() item: IItem;

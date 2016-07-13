@@ -4,8 +4,10 @@ import { addItem, updateItem,
   deleteItem, fetchItems } from '../actions/items-creator';
 import { ItemsService } from '../services/items-service';
 import { IItem } from '../item';
+import { ItemComponent } from './item.component';
   @Component({
     selector: 'app',
+    directives: [ItemComponent],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `<h1>{{ title }}</h1>`
   })
@@ -30,7 +32,7 @@ import { IItem } from '../item';
     }
 
     private addItem () {
-    //  this.itemsStore.dispatch(addItem({ name: 'this is name', id: 1, description: 'abc' }));
+    // this.itemsStore.dispatch(addItem({ name: 'this is name', id: new Date().valueOf(), description: 'abc' }));
     }
 
     private removeItem () {
