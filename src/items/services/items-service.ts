@@ -4,15 +4,19 @@ import { IItemReducer } from '../reducers/item-reducers';
 import { IItem } from '../item';
 import { Observable } from 'rxjs/Observable';
 import { config } from '../items.config.ts';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, BaseRequestOptions } from '@angular/http';
 import itemConsts from '../items-consts';
 
 @Injectable()
 export class ItemsService {
-  constructor(private http: Http) { }
+  constructor(private http: Http, private baseOptions: BaseRequestOptions) {
+   this.http = http;
+ }
 
   getItems (): Observable<IItem[]> {
-    return this.http.get(config.api)
+    const url = config.api;
+    console.log(url);
+    return this.http.get(url, this.baseOptions)
         .map(response => response.json())
         .map(this.mapToReducer);
   }

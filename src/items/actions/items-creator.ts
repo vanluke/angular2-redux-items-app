@@ -28,10 +28,10 @@ export const deleteItem = function (payload: any = {})
     };
 };
 
-export const fetchItems = function (state = [])
+export const fetchItems = function (state: any = {})
   : IItemReducer {
     return {
     type: itemsConsts.fetched_items,
-    payload: [...state]
+    payload: [...state.items]
   };
 };
