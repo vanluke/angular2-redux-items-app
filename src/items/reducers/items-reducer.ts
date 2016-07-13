@@ -4,7 +4,7 @@ import { IItem } from '../item';
 export const itemsReducer: any = (state: any = {}, { type, payload }) => {
   switch (type) {
     case itemListReducerTypes.add_item:
-      return { items: [...state, payload] };
+      return { items: [...state.items, payload] };
     case itemListReducerTypes.update_item:
       return { items: state.items.map(element => {
         return element.id === payload.id
