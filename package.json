@@ -70,7 +70,6 @@
     "@angular/http": "^2.0.0-rc.4",
     "@angular/platform-browser": "^2.0.0-rc.4",
     "@angular/platform-browser-dynamic": "^2.0.0-rc.4",
-    "@angular/router": "^3.0.0-beta.2",
     "convict": "^1.4.0",
     "core-js": "^2.4.0",
     "koa": "^1.2.0",
