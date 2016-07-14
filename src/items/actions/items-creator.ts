@@ -1,4 +1,5 @@
 import itemsConsts from '../items-consts';
+import itemConsts from '../item-selected-consts';
 import { Observable } from 'rxjs';
 import { IItem } from '../item' ;
 import { IItemReducer } from '../reducers/item-reducers';
@@ -33,5 +34,13 @@ export const fetchItems = function (state: any = {})
     return {
     type: itemsConsts.fetched_items,
     payload: [...state.items]
+  };
+};
+
+export const fetchItem = function (state: any = {})
+  : IItemReducer {
+    return {
+    type: itemConsts.select_item,
+    payload: Object.assign({}, state)
   };
 };

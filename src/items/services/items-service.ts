@@ -15,17 +15,23 @@ export class ItemsService {
 
   getItems (): Observable<IItem[]> {
     const url = config.api;
-    console.log(url);
     return this.http.get(url, this.baseOptions)
         .map(response => response.json())
         .map(this.mapToReducer);
   }
 
+  getItem (id: number): Observable<IItem> {
+    const url = `${config.itemApi}/${id}`;
+    return this.http.get(url, this.baseOptions)
+        .map(response => response.json())
+        .map(this.mapSingleItemToReducer);
+  }
+
   private mapToReducer(items: IItem[]): IItem[] {
-    // return {
-    //   type: itemConsts.fetch_items,
-    //   payload: items
-    // };
     return items;
+  }
+
+  private mapSingleItemToReducer(item: IItem): IItem {
+    return item;
   }
 }

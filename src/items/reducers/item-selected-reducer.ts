@@ -4,7 +4,7 @@ export const selectedItem = (state: any = {},
    { type, payload }) => {
   switch (type) {
     case selectedItemTypes.select_item:
-      return state.find(e => e.id === payload.id);
+      return { item: Object.assign({}, payload) };
     default: return state;
   }
 };

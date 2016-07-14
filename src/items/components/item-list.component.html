@@ -1,0 +1,7 @@
+<div>
+  <div *ngIf="appProps.items.length > 0">
+    <div *ngFor="let im of appProps.items">
+       <a [routerLink]="['/item', im.id]">{{ im.name }}</a>
+    </div>
+  </div>
+</div>

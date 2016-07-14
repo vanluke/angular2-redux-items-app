@@ -59,4 +59,28 @@ describe ('items service', () => {
         expect(items.items).toContain(jasmine.objectContaining({ id: 1 }));
     });
   })));
+
+  it ('fetch single item',
+  async(inject([ItemsService, MockBackend], (service, mockBackend) => {
+    mockBackend.connections.subscribe((connection: MockConnection) => {
+      expect(connection.request.method).toBe(RequestMethod.Get);
+      expect(connection.request.url)
+      .toBe('http://localhost:1337/api/v0/item/1');
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        body: {
+          item: {
+            id: 1,
+            name: 'name',
+            description: 'description'
+          }
+        }
+      })));
+    });
+
+    service.getItem(1).subscribe(items => {
+        expect(items).not.toBe(undefined);
+        expect(items.item).toContain(jasmine.objectContaining({ id: 1 }));
+    });
+  })));
 });

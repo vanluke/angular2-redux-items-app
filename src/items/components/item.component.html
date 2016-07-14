@@ -1,0 +1,13 @@
+<div *ngIf="item">
+  <div>
+    <div>
+      <label>{{ item.id }}</label>
+    </div>
+    <div>
+      <input [(ngModel)]="item.name" type="text" />
+    </div>
+  </div>
+  <div>
+    <textarea [(ngModel)]="item.description"></textarea>
+  </div>
+</div>

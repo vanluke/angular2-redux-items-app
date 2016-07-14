@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import rootReducer from '../items/reducers';
 import { addItem, updateItem,
-  deleteItem, fetchItems } from '../items/actions/items-creator';
+  deleteItem, fetchItems, fetchItem } from '../items/actions/items-creator';
 import { ItemsService } from '../items/services/items-service';
 import { IItem } from '../items/item';
 import { IAppProps } from '../middleware/iapp-props';
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.unsubscribe = this.connectToStore(this.itemsStore,
       this.state,
+      this.setItem.bind(this),
       this.setItems.bind(this));
       this.decorateRouter();
 
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appProps.events.on('updateItem', this.updateItem);
     this.appProps.events.on('deleteItem', this.deleteItem);
     this.appProps.events.on('fetchItems', this.fetchItems.bind(this));
+    this.appProps.events.on('fetchItem', this.fetchItem.bind(this));
   }
 
   decorateRouter () {
@@ -42,9 +44,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe.unsubscribe();
   }
 
-  connectToStore (itemsStore, state, items) {
+  connectToStore (itemsStore, state, item, items) {
     return itemsStore.connect(() => {
       state = itemsStore.getState();
+      item(state.selectedItem);
       items(state.itemsReducer);
     });
   }
@@ -67,13 +70,20 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  public get items() {
-    return this.appProps.items;
+  fetchItem (id) {
+    this.itemsService.getItem(id).subscribe(item => {
+      this.itemsStore.dispatch(fetchItem(item));
+    });
   }
 
   setItems(value: any) {
     const { items } = value;
     this.appProps.items = [...items];
+  }
+
+  setItem (value) {
+    const { item } = value;
+    this.appProps.selectedItem = Object.assign({}, item);
   }
 
   state: any;

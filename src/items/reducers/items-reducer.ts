@@ -17,7 +17,7 @@ export const itemsReducer: any = (state: any = {}, { type, payload }) => {
         .items
         .filter(element => element.id !== payload.id) };
     case itemListReducerTypes.fetch_items:
-      return Object.assign({}, state, { payload: []
+      return Object.assign({}, state, { items: []
            });
     case itemListReducerTypes.fetched_items:
           return Object.assign({}, state, {
