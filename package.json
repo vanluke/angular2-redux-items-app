@@ -1,10 +1,11 @@
 {
   "name": "ng-with-redux",
   "version": "1.0.0",
-  "description": "",
+  "description": "POC",
   "main": "src/js/index.ts",
   "scripts": {
     "start:dev": "./node_modules/.bin/webpack-dev-server --inline --hot",
+    "start:server": "node index.js",
     "build:dev": "./node_modules/.bin/webpack -d",
     "start": "npm run start:dev",
     "test": "karma start --singleRun false"
