@@ -22,5 +22,14 @@ export class ItemViewComponent implements OnInit {
       return this.appProps.selectedItem;
     }
 
+
+    saveItem(item) {
+        console.log(item);
+        this.appProps.events.emit('updateItem', item);
+        this.enableEdit();
+    }
+
+    enableEdit = () => this.isEditMode = !this.isEditMode;
+    isEditMode: boolean;
     private subscription: any;
 }

@@ -1,3 +1,20 @@
 <div *ngIf="item">
   <item-element [(item)]="item"></item-element>
+  <div>
+    <button (click)="enableEdit()">Toggle Edit Mode</button>
+  </div>
+  <div *ngIf="isEditMode">
+    <h3>Edit item {{ item.id }}</h3>
+    <div>
+      <div>
+        <input [(ngModel)]="item.name" type="text" />
+      </div>
+      <div>
+        <textarea [(ngModel)]="item.description"></textarea>
+      </div>
+    </div>
+    <div>
+      <button (click)="saveItem(item)">Save</button>
+    </div>
+  </div>
 </div>

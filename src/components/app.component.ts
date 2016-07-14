@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   decorateEventEmitter () {
     this.appProps.events.on('addItem', this.addItem);
-    this.appProps.events.on('updateItem', this.updateItem);
+    this.appProps.events.on('updateItem', this.updateItem.bind(this));
     this.appProps.events.on('deleteItem', this.deleteItem);
     this.appProps.events.on('fetchItems', this.fetchItems.bind(this));
     this.appProps.events.on('fetchItem', this.fetchItem.bind(this));
@@ -57,7 +57,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   updateItem(item: IItem) {
-
+    this.itemsStore.dispatch(updateItem(this.state, item));
+    this.itemsStore.dispatch(fetchItem(item));
   }
 
   deleteItem(item: IItem) {
@@ -83,7 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   setItem (value) {
     const { item } = value;
-    this.appProps.selectedItem = Object.assign({}, item);
+    this.appProps.selectedItem = Object.assign({}, item || {});
   }
 
   state: any;

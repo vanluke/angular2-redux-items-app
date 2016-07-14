@@ -30,7 +30,15 @@ const conf = convict({
     format: '*',
     default: '0',
     env: 'VERSION'
-  }
+  },
+  mongoDb: {
+   uri: {
+     doc: 'MongoDB config.',
+     format: String,
+     default: 'undefined',
+     env: 'MongoDB'
+   }
+ }
 });
 
 const env = conf.get('env');
