@@ -32,7 +32,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.setItem.bind(this),
       this.setItems.bind(this));
       this.decorateRouter();
-
   }
 
   decorateEventEmitter () {

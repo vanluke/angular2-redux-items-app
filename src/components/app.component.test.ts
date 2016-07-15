@@ -20,6 +20,7 @@ import { LocationStrategy } from '@angular/common';
 import { Router, ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
 import { addProviders } from '@angular/core/testing';
 import { SpyLocation } from '@angular/common/testing';
+
 const applicationStore = connect(itemsStore({}));
 
 class MockRouter {
@@ -42,7 +43,6 @@ describe('app component', () => {
   ]);
   it('should build', async(inject([TestComponentBuilder], (tcb) => {
     return tcb.createAsync(AppComponent).then((fixture) => {
-      console.log(fixture.debugElement.componentInstance);
       fixture.debugElement.componentInstance.fetchItems();
     });
   })));
