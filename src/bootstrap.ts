@@ -7,8 +7,6 @@ import itemsStore from './items/store';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { connect } from './middleware/store/connect';
 import { ItemsService } from './items/services/items-service';
-import { NgReduxRouter } from 'ng2-redux-router';
-import { NgRedux } from 'ng2-redux';
 import { routerProviders } from './items/routes';
 
 const applicationStore = connect(itemsStore({}));

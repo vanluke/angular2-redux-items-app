@@ -10,7 +10,14 @@ import { IAppProps } from '../middleware/iapp-props';
 
 @Component({
   selector: 'app',
-  template: require('./app.component.html'),
+  template: `<div>
+    <h1>NG2 Redux with routing</h1>
+     <nav>
+       <a [routerLink]="['/']">Home</a>
+       <a [routerLink]="['/items']">Items</a>
+     </nav>
+     <router-outlet></router-outlet>
+     </div>`,
   directives: [ROUTER_DIRECTIVES]
 })
 export class AppComponent implements OnInit, OnDestroy {

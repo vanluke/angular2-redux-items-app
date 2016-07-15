@@ -25,7 +25,7 @@ describe('selectedItem reducer', () => {
       description: 'describe me'
     };
     const defaultState = selectedItem([item],
-      { type: selectedItemTypes.select_item, payload: { id: 1 }});
-    expect(defaultState).toEqual(item);
+      { type: selectedItemTypes.select_item, payload: item});
+    expect(defaultState.item).toEqual(item);
   });
 });

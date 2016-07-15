@@ -24,7 +24,6 @@ export class ItemViewComponent implements OnInit {
 
 
     saveItem(item) {
-        console.log(item);
         this.appProps.events.emit('updateItem', item);
         this.enableEdit();
     }

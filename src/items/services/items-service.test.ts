@@ -80,7 +80,7 @@ describe ('items service', () => {
 
     service.getItem(1).subscribe(items => {
         expect(items).not.toBe(undefined);
-        expect(items.item).toContain(jasmine.objectContaining({ id: 1 }));
+        expect(items.item.id).toEqual(1);
     });
   })));
 });

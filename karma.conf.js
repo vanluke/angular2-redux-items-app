@@ -21,7 +21,8 @@ module.exports = (config) => {
       'karma-coverage',
       'karma-phantomjs-launcher',
       'karma-spec-reporter',
-    //  'karma-chrome-launcher',
+      'karma-chrome-launcher',
+      'karma-firefox-launcher'
     ],
 
     files: [
@@ -47,7 +48,7 @@ module.exports = (config) => {
     webpack: {
       plugins,
       entry: './src/tests.entry.ts',
-      devtool: 'inline-source-map',
+      devtool: 'source-map',
       verbose: false,
       resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
@@ -82,7 +83,7 @@ module.exports = (config) => {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['PhantomJS'], // Alternatively: 'PhantomJS'
+    browsers: ['Chrome', 'Firefox'], // Alternatively: 'PhantomJS'
     captureTimeout: 6000,
     singleRun: false,
     concurrency: Infinity,

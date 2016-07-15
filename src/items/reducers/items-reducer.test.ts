@@ -10,8 +10,8 @@ describe('list item reducer', () => {
   });
 
   it('reducer return new item for add_item type.', () => {
-    const reducer = itemsReducer([{}],
-      { type: itemReducerTypes.add_item, payload: {} });
+    const reducer = itemsReducer({ items: [{}] },
+      { type: itemReducerTypes.add_item, payload: { id: 4 } });
     expect(reducer).not.toBeNull();
     expect(reducer.items.length).toBeGreaterThan(1);
   });
