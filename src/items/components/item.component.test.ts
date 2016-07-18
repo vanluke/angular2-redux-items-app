@@ -1,11 +1,23 @@
-import { Input, Component, ChangeDetectionStrategy } from '@angular/core';
-import { IItem } from '../item';
+import 'rxjs/Rx';
+import {
+  it,
+  describe,
+  expect,
+  beforeEachProviders,
+  inject,
+  TestComponentBuilder,
+  async } from '@angular/core/testing';
+import { ItemComponent } from './item.component';
 
-@Component({
-  selector: 'item-element',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: require('./item.component.html')
-})
-export class ItemComponent {
-  @Input() item: IItem;
-}
+describe('item component', () => {
+  it('should build', async(inject([TestComponentBuilder], (tcb) => {
+    return tcb.createAsync(ItemComponent).then((fixture) => {
+      expect(fixture.debugElement.componentInstance.item).not.toBeNull();
+      let itemCmp = fixture.componentInstance;
+      const element = fixture.nativeElement;
+      itemCmp.item = { id: 1, name: 'this is my name', description: 'abc' };
+      fixture.detectChanges();
+      expect(element.querySelector('h5').innerText).toBe('this is my name');
+    });
+  })));
+});

@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IAppProps } from '../../middleware/iapp-props';
 import { ActivatedRoute } from '@angular/router';
 import { ItemComponent } from './item.component';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'item',
   template: require('./item-view.component.html'),
   directives: [ItemComponent]
 })
-export class ItemViewComponent implements OnInit {
+export class ItemViewComponent implements OnInit, OnDestroy {
     constructor (private appProps: IAppProps, private route: ActivatedRoute) {}
 
-    ngOnInit() {
+    ngOnInit(): Subscription {
         this.subscription = this.route.params.subscribe(params => {
           const itemId = parseInt((<any>params).id, 10);
-          this.appProps.events.emit('fetchItem', itemId);
+          return this.appProps.events.emit('fetchItem', itemId);
         });
+        return this.subscription;
+    }
+
+    ngOnDestroy(): Subscription {
+      this.subscription.unsubscribe();
+      return this.subscription;
     }
 
     get item () {
@@ -29,6 +37,6 @@ export class ItemViewComponent implements OnInit {
     }
 
     enableEdit = () => this.isEditMode = !this.isEditMode;
-    isEditMode: boolean;
-    private subscription: any;
+    isEditMode: boolean = false;
+    private subscription: Subscription;
 }

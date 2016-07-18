@@ -27,7 +27,7 @@ export const ts = {
 
 export const html = {
   test: /\.html$/,
-  loader: 'raw',
+  loader: 'html-loader',
   exclude: /node_modules/,
 };
 

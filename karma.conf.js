@@ -48,7 +48,7 @@ module.exports = (config) => {
     webpack: {
       plugins,
       entry: './src/tests.entry.ts',
-      devtool: 'source-map',
+      devtool: 'inline-source-map',
       verbose: false,
       resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
@@ -96,7 +96,8 @@ function combinedLoaders() {
     switch (k) {
       case 'istanbulInstrumenter':
       case 'tslint':
-      return aggregate;
+        return aggregate;
+      case 'html': return aggregate;
       case 'ts':
       case 'tsTest':
       return aggregate.concat([ // force inline source maps
