@@ -7,6 +7,7 @@ import { addItem, updateItem,
 import { ItemsService } from '../items/services/items-service';
 import { IItem } from '../items/item';
 import { IAppProps } from '../middleware/iapp-props';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app',
@@ -19,12 +20,14 @@ export class AppComponent implements OnInit, OnDestroy {
     private appProps: IAppProps) {
     }
 
-  ngOnInit() {
+  ngOnInit(): Subscription {
     this.unsubscribe = this.connectToStore(this.itemsStore,
       this.state,
       this.setItem.bind(this),
       this.setItems.bind(this));
-      this.decorateRouter();
+      this.decorateEventEmitter();
+
+      return this.unsubscribe;
   }
 
   decorateEventEmitter () {
@@ -33,10 +36,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appProps.events.on('deleteItem', this.deleteItem);
     this.appProps.events.on('fetchItems', this.fetchItems.bind(this));
     this.appProps.events.on('fetchItem', this.fetchItem.bind(this));
-  }
-
-  decorateRouter () {
-    this.decorateEventEmitter();
   }
 
   ngOnDestroy() {
@@ -76,7 +75,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  setItems(value: any) {
+  setItems (value: any) {
     const { items } = value;
     this.appProps.items = [...items];
   }
