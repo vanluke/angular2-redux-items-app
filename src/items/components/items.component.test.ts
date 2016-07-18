@@ -15,4 +15,14 @@ describe('items component', () => {
       expect(fixture.debugElement.componentInstance.title).not.toBeNull();
     });
   })));
+
+  it('should have title defined',
+    async(inject([TestComponentBuilder], (tcb) => {
+    return tcb.createAsync(ItemsComponent).then((fixture) => {
+      expect(fixture
+          .debugElement
+          .componentInstance
+          .title).toBe('Welcome Items');
+    });
+  })));
 });
