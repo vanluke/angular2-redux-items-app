@@ -80,8 +80,8 @@ const _updateItem = (db, item) => {
     .update({'_id': id },
     {
       $set: {
-        'name': rectangle.name,
-        'description': rectangle.description
+        'name': item.name,
+        'description': item.description
       }
     },
     item, function (err, results) {
@@ -117,7 +117,7 @@ const updateItem = async function () {
     const itemId = this.params.id;
     const body = await parse(this);
     const response = await connect(_updateItem, body);
-    this.body =  response;
+    this.body =  body;
     this.status = 201;
 };
 

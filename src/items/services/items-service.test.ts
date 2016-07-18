@@ -83,4 +83,29 @@ describe ('items service', () => {
         expect(items.item.id).toEqual(1);
     });
   })));
+
+  it ('update single item',
+  async(inject([ItemsService, MockBackend], (service, mockBackend) => {
+    const item: IItem = {
+      id: 1,
+      name: 'name',
+      description: 'description'
+    };
+    mockBackend.connections.subscribe((connection: MockConnection) => {
+      expect(connection.request.method).toBe(RequestMethod.Put);
+      expect(connection.request.url)
+      .toBe('http://localhost:1337/api/v0/item/1');
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        body: {
+          item
+        }
+      })));
+    });
+
+    service.updateItem(item).subscribe(items => {
+        expect(items).not.toBe(undefined);
+        expect(items.item.id).toEqual(1);
+    });
+  })));
 });
