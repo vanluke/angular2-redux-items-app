@@ -37,9 +37,10 @@ const getItemsFromServer = (db) => {
 };
 
 const getItemFromServer = (db, id) => {
+  const objectId = new ObjectId(id);
   return new Promise ((resolve, reject) => {
     const cursor = db.collection(itemDocumentName)
-              .find({ id: id });
+              .find({ '_id': objectId });
     cursor.each(function(err, doc) {
          assert.equal(err, null);
          resolve(doc);
@@ -103,6 +104,7 @@ const item = async function () {
     const itemId = this.params.id;
     const data = await connect (getItemFromServer, itemId);
     this.status = 200;
+    console.log(data);
     this.body = data;
 };
 

@@ -28,10 +28,17 @@ export class ItemsService {
   }
 
   updateItem (item: IItem): Observable<IItem> {
-    const url = `${config.itemApi}/${item.id}`;
+    const url = `${config.itemApi}/${item._id}`;
     return this.http.put(url, item, this.baseOptions)
         .map(response => response.json())
         .map(this.mapSingleItemToReducer);
+  }
+
+  createItem (item: IItem): Observable<IItem> {
+    const url = `${config.itemApi}`;
+    return this.http.post(url, item, this.baseOptions)
+      .map(response => response.json())
+      .map(this.mapSingleItemToReducer);
   }
 
   private mapToReducer(items: IItem[]): IItem[] {
@@ -39,7 +46,6 @@ export class ItemsService {
   }
 
   private mapSingleItemToReducer(item: IItem): IItem {
-    console.log(item);
     return item;
   }
 }

@@ -4,18 +4,19 @@ import { ActivatedRoute } from '@angular/router';
 import { ItemComponent } from './item.component';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
+import { ItemInputComponent } from './item-input.component';
 
 @Component({
   selector: 'item',
   template: require('./item-view.component.html'),
-  directives: [ItemComponent]
+  directives: [ItemComponent, ItemInputComponent]
 })
 export class ItemViewComponent implements OnInit, OnDestroy {
     constructor (private appProps: IAppProps, private route: ActivatedRoute) {}
 
     ngOnInit(): Subscription {
         this.subscription = this.route.params.subscribe(params => {
-          const itemId = parseInt((<any>params).id, 10);
+          const itemId = (<any>params).id;
           return this.appProps.events.emit('fetchItem', itemId);
         });
         return this.subscription;

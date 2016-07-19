@@ -1,7 +1,15 @@
 <div>
+  <button (click)="toggleCreateItem()">{{ toggleText }}</button>
+  <div *ngIf="isCreateModeEnabled">
+    <h4>Create item:</h4>
+    <item-input-element [(item)]="item"></item-input-element>
+    <div>
+      <button (click)="saveItem(item)">Save</button>
+    </div>
+  </div>
   <div *ngIf="appProps.items.length > 0">
     <div *ngFor="let im of appProps.items">
-       <a [routerLink]="['/item', im.id]">{{ im.name }}</a>
+       <a [routerLink]="['/item', im._id]">{{ im.name }}</a>
     </div>
   </div>
 </div>

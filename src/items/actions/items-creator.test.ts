@@ -7,7 +7,7 @@ import { addItem, updateItem, deleteItem, fetchItems } from './items-creator';
 describe('action createors', () => {
   it('add_item', () => {
     const addItemAction =  addItem(
-      { id: 1, description: 'text', name: 'name' });
+      { _id: 1, id: 1, description: 'text', name: 'name' });
       expect(addItemAction).not.toBeNull();
       expect(addItemAction.payload.id)
       .toEqual(1);
@@ -15,8 +15,8 @@ describe('action createors', () => {
 
     it('update_item', () => {
       const updateItemAction =  updateItem(
-        [{ id: 1, description: 'text', name: 'name' }],
-        { id: 1, description: 'text 2', name: 'name 2' });
+        [{ _id: 1, id: 1, description: 'text', name: 'name' }],
+        { _id: 1, id: 1, description: 'text 2', name: 'name 2' });
         expect(updateItemAction).not.toBeNull();
         expect(updateItemAction.payload.name)
         .toEqual('name 2');
@@ -26,7 +26,7 @@ describe('action createors', () => {
       //
       it('delete_item', () => {
         const deleteItemAction =  deleteItem(
-          { id: 1 });
+          { _id: 1 });
           expect(deleteItemAction).not.toBeNull();
           expect(deleteItemAction.payload)
           .not.toContain(jasmine.objectContaining({ name : 'name' }));
@@ -35,6 +35,5 @@ describe('action createors', () => {
         it('fetch_items', () => {
           const fetchItemsAction =  fetchItems({ items: []});
             expect(fetchItemsAction).not.toBeNull();
-            // expect(fetchItemsAction.payload.length).toBeGreaterThan(0);
           });
         });
