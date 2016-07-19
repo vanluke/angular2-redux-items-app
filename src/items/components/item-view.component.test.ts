@@ -12,15 +12,24 @@ import {
 import { ItemViewComponent } from './item-view.component';
 import { IAppProps } from '../../middleware/iapp-props';
 import { AppProps } from '../../middleware/app-props';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IItem } from '../item';
+import { routerProviders } from '../../items/routes';
 
 class MockActivatedRoute {
   params: Observable<any> = Observable.of({ id: 1 });
 };
 
+class MockRouter {
+  createUrlTree() {}
+  navigateByUrl() {}
+  navigate() {}
+}
+
 describe('item view component', () => {
   beforeEachProviders(() => [
+      routerProviders,
+      provide(Router, { useClass: MockRouter }),
       provide(ActivatedRoute,
         { useClass: MockActivatedRoute }),
       provide(IAppProps, { useClass: AppProps })
@@ -159,6 +168,75 @@ describe('item view component', () => {
               .componentInstance
               .appProps.selectedItem = Object.assign({}, fakeItem);
           expect(fixture.debugElement.componentInstance.item).toBeDefined();
+        });
+      })));
+
+      it('should have delete button',
+        async(inject([TestComponentBuilder], (tcb) => {
+        return tcb.createAsync(ItemViewComponent).then((fixture) => {
+          expect(fixture.nativeElement
+            .querySelector('.items__item__button--remove'))
+            .not.toBe(undefined);
+        });
+      })));
+
+      it('should remove item emit deleteItem event',
+        async(inject([TestComponentBuilder], (tcb) => {
+        return tcb.createAsync(ItemViewComponent).then((fixture) => {
+          spyOn(fixture
+              .debugElement
+              .componentInstance
+              .appProps
+              .events,
+              'emit');
+          const fakeItem: IItem = {
+            _id: 123,
+            id: 123,
+            description: 'abc',
+            name: 'pak'
+          };
+
+          fixture.debugElement.componentInstance.removeItem (fakeItem);
+
+          expect(fixture
+              .debugElement
+              .componentInstance
+              .appProps
+              .events.emit).toHaveBeenCalled();
+
+              expect(fixture
+                  .debugElement
+                  .componentInstance
+                  .appProps
+                  .events.emit).toHaveBeenCalledWith('deleteItem', fakeItem);
+        });
+      })));
+
+      it('should remove item call navigate',
+        async(inject([TestComponentBuilder], (tcb) => {
+        return tcb.createAsync(ItemViewComponent).then((fixture) => {
+          spyOn(fixture
+              .debugElement
+              .componentInstance,
+              'navigate');
+          const fakeItem: IItem = {
+            _id: 123,
+            id: 123,
+            description: 'abc',
+            name: 'pak'
+          };
+
+          fixture.debugElement.componentInstance.removeItem (fakeItem);
+
+          expect(fixture
+              .debugElement
+              .componentInstance
+              .navigate).toHaveBeenCalled();
+
+              expect(fixture
+                  .debugElement
+                  .componentInstance
+                  .navigate).toHaveBeenCalledWith('/items');
         });
       })));
 });

@@ -63,7 +63,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   deleteItem(item: IItem) {
-
+    this.itemsService.deleteItem(item).subscribe(_itm => {
+      this.fetchItems();
+    });
   }
 
   fetchItems() {

@@ -137,4 +137,27 @@ describe ('items service', () => {
         expect(items.item._id).toEqual(1);
     });
   })));
+
+  it ('delete item',
+  async(inject([ItemsService, MockBackend], (service, mockBackend) => {
+    const item: IItem = {
+      _id: 1,
+      id: 1,
+      name: 'name',
+      description: 'description'
+    };
+    mockBackend.connections.subscribe((connection: MockConnection) => {
+      expect(connection.request.method).toBe(RequestMethod.Delete);
+      expect(connection.request.url)
+      .toBe('http://localhost:1337/api/v0/item/1');
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 204
+      })));
+    });
+
+    service.deleteItem(item).subscribe(res => {
+        expect(res.status).toBe(204);
+    });
+  })));
 });

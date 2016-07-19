@@ -41,6 +41,17 @@ export class ItemsService {
       .map(this.mapSingleItemToReducer);
   }
 
+  deleteItem (item: IItem): Observable<Response> {
+    const url = `${config.itemApi}/${item._id}`;
+    return this.http.delete(url, this.baseOptions)
+      .map(response => response)
+      .map(this.mapResponse);
+  }
+
+  private mapResponse (response: Response): Response {
+    return response;
+  }
+
   private mapToReducer(items: IItem[]): IItem[] {
     return items;
   }
