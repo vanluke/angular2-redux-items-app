@@ -3,6 +3,9 @@
   <div>
     <button (click)="enableEdit()">Toggle Edit Mode</button>
   </div>
+  <div>
+    <button class="items__item__button--remove" (click)="removeItem(item)">Remove item</button>
+  </div>
   <div *ngIf="isEditMode">
     <h3>Edit item {{ item._id }}</h3>
     <item-input-element [(item)]="item"></item-input-element>
