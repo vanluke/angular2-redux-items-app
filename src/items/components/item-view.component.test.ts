@@ -81,6 +81,7 @@ describe('item view component', () => {
               .events,
               'emit');
           const fakeItem: IItem = {
+            _id: 123,
             id: 123,
             description: 'abc',
             name: 'pak'
@@ -100,6 +101,7 @@ describe('item view component', () => {
         return tcb.createAsync(ItemViewComponent).then((fixture) => {
           spyOn(fixture.debugElement.componentInstance, 'saveItem');
           const fakeItem: IItem = {
+            _id: 123,
             id: 123,
             description: 'abc',
             name: 'pak'
@@ -123,6 +125,7 @@ describe('item view component', () => {
         async(inject([TestComponentBuilder], (tcb) => {
         return tcb.createAsync(ItemViewComponent).then((fixture) => {
           const fakeItem: IItem = {
+            _id: 123,
             id: 123,
             description: 'abc',
             name: 'pak'
@@ -146,6 +149,7 @@ describe('item view component', () => {
         async(inject([TestComponentBuilder], (tcb) => {
         return tcb.createAsync(ItemViewComponent).then((fixture) => {
           const fakeItem: IItem = {
+            _id: 123,
             id: 123,
             description: 'abc',
             name: 'pak'

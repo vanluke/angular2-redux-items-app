@@ -31,9 +31,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   decorateEventEmitter () {
-    this.appProps.events.on('addItem', this.addItem);
+    this.appProps.events.on('addItem', this.addItem.bind(this));
     this.appProps.events.on('updateItem', this.updateItem.bind(this));
-    this.appProps.events.on('deleteItem', this.deleteItem);
+    this.appProps.events.on('deleteItem', this.deleteItem.bind(this));
     this.appProps.events.on('fetchItems', this.fetchItems.bind(this));
     this.appProps.events.on('fetchItem', this.fetchItem.bind(this));
   }
@@ -51,7 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   addItem(item: IItem) {
-
+    this.itemsService.createItem(item).subscribe(_itm => {
+      this.fetchItems();
+    });
   }
 
   updateItem(item: IItem) {
@@ -70,7 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetchItem (id) {
+  fetchItem (id: any) {
     this.itemsService.getItem(id).subscribe(item => {
       this.itemsStore.dispatch(fetchItem(item));
     });
@@ -81,7 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appProps.items = [...items];
   }
 
-  setItem (value) {
+  setItem (value: any) {
     const { item } = value;
     this.appProps.selectedItem = Object.assign({}, item || {});
   }

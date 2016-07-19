@@ -46,6 +46,7 @@ describe ('items service', () => {
       connection.mockRespond(new Response(new ResponseOptions({
         body: {
           items: [{
+            _id: 1,
             id: 1,
             name: 'name',
             description: 'description'
@@ -56,7 +57,7 @@ describe ('items service', () => {
 
     service.getItems().subscribe(items => {
         expect(items).not.toBe(undefined);
-        expect(items.items).toContain(jasmine.objectContaining({ id: 1 }));
+        expect(items.items).toContain(jasmine.objectContaining({ _id: 1 }));
     });
   })));
 
@@ -70,6 +71,7 @@ describe ('items service', () => {
       connection.mockRespond(new Response(new ResponseOptions({
         body: {
           item: {
+            _id: 1,
             id: 1,
             name: 'name',
             description: 'description'
@@ -80,13 +82,14 @@ describe ('items service', () => {
 
     service.getItem(1).subscribe(items => {
         expect(items).not.toBe(undefined);
-        expect(items.item.id).toEqual(1);
+        expect(items.item._id).toEqual(1);
     });
   })));
 
   it ('update single item',
   async(inject([ItemsService, MockBackend], (service, mockBackend) => {
     const item: IItem = {
+      _id: 1,
       id: 1,
       name: 'name',
       description: 'description'
@@ -105,7 +108,33 @@ describe ('items service', () => {
 
     service.updateItem(item).subscribe(items => {
         expect(items).not.toBe(undefined);
-        expect(items.item.id).toEqual(1);
+        expect(items.item._id).toEqual(1);
+    });
+  })));
+
+  it ('create single item',
+  async(inject([ItemsService, MockBackend], (service, mockBackend) => {
+    const item: IItem = {
+      _id: 1,
+      id: 1,
+      name: 'name',
+      description: 'description'
+    };
+    mockBackend.connections.subscribe((connection: MockConnection) => {
+      expect(connection.request.method).toBe(RequestMethod.Post);
+      expect(connection.request.url)
+      .toBe('http://localhost:1337/api/v0/item');
+
+      connection.mockRespond(new Response(new ResponseOptions({
+        body: {
+          item
+        }
+      })));
+    });
+
+    service.createItem(item).subscribe(items => {
+        expect(items).not.toBe(undefined);
+        expect(items.item._id).toEqual(1);
     });
   })));
 });

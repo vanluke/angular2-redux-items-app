@@ -15,7 +15,8 @@ describe('item component', () => {
       expect(fixture.debugElement.componentInstance.item).not.toBeNull();
       let itemCmp = fixture.componentInstance;
       const element = fixture.nativeElement;
-      itemCmp.item = { id: 1, name: 'this is my name', description: 'abc' };
+      itemCmp.item = { _id: 1,
+        id: 1, name: 'this is my name', description: 'abc' };
       fixture.detectChanges();
       expect(element.querySelector('h5').innerText).toBe('this is my name');
     });
