@@ -4,8 +4,8 @@ import plugins from './dev-configs/webpack-plugins';
 
 export default {
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/dev-server',
+    'webpack-dev-server/client?http://localhost:3000',
     './src/index.ts'
   ],
   output: {
@@ -13,9 +13,11 @@ export default {
     filename: '[name].[hash].js',
     publicPath: '/',
     sourceMapFilename: '[name].[hash].js.map',
-    chunkFilename: '[id].chunk.js',
+    chunkFilename: '[id].chunk.js'
   },
-  devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'inline-source-map',
+  devtool: process.env.NODE_ENV === 'production'
+    ? 'source-map'
+    : 'inline-source-map',
   resolve: { extensions: ['', '.webpack.babel.js', '.web.js', '.ts', '.js'] },
   plugins: plugins,
   devServer: {
@@ -26,15 +28,14 @@ export default {
       colors: true,
       timings: true
     },
-    hot:true,
-    historyApiFallback: { index: '/' },
-    //  proxy: Object.assign({}, proxy(), { '/api/*': 'http://localhost:3000' }),
+    hot: true,
+    historyApiFallback: { index: '/' }
   },
   module: {
     preLoaders: [
       tslint
     ],
     loaders: loaders,
-    noParse: [ /zone\.js\/dist\/.+/, /angular2\/bundles\/.+/ ],
-  },
+    noParse: [ /zone\.js\/dist\/.+/, /angular2\/bundles\/.+/ ]
+  }
 };

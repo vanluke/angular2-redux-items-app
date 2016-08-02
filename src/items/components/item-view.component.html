@@ -1,16 +1,16 @@
 <div *ngIf="item">
   <item-element [(item)]="item"></item-element>
   <div>
-    <button (click)="enableEdit()">Toggle Edit Mode</button>
+    <button class="container__items__button" (click)="enableEdit()">Toggle Edit Mode</button>
   </div>
   <div>
-    <button class="items__item__button--remove" (click)="removeItem(item)">Remove item</button>
+    <button class="container__items__button" (click)="removeItem(item)">Remove item</button>
   </div>
-  <div *ngIf="isEditMode">
+  <div *ngIf="isEditMode" class="container__items__item">
     <h3>Edit item {{ item._id }}</h3>
     <item-input-element [(item)]="item"></item-input-element>
     <div>
-      <button (click)="saveItem(item)">Save</button>
+      <button class="container__items__button" (click)="saveItem(item)">Save</button>
     </div>
   </div>
 </div>

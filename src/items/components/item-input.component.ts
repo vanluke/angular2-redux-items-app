@@ -1,5 +1,6 @@
 import { Input, Component, ChangeDetectionStrategy } from '@angular/core';
 import { IItem } from '../item';
+import './_items.scss';
 
 @Component({
   selector: 'item-input-element',

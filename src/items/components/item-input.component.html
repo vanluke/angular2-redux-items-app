@@ -1,10 +1,12 @@
 <div>
   <div *ngIf="item">
-    <div>
-      <input [(ngModel)]="item.name" type="text" />
+    <div class="container__items__item__group">
+      <input id="name" class="container__items__item__input" [(ngModel)]="item.name" type="text" />
+      <label class="container__items__item__label" for="name">Name:</label>
     </div>
-    <div>
-      <textarea [(ngModel)]="item.description"></textarea>
+    <div class="container__items__item__group">
+        <textarea class="container__items__item__input" [(ngModel)]="item.description" id="description"></textarea>
+         <label class="container__items__item__label" for="description">Description:</label>
     </div>
   </div>
 </div>

@@ -1,0 +1,47 @@
+@import "../../mixins.scss";
+@import "../_container.scss";
+
+.container {
+  @include element('items') {
+     @include element('item') {
+       width: 400px;
+       margin: 0 auto;
+
+       @include element('label') {
+         display: block;
+         position:absolute;
+         transition: transform 0.3s;
+         top: -20px;
+       }
+       @include element('input') {
+         border: 1px solid #ecebe9;
+         transition: transform 0.3s;
+         padding: 0.4em 0.25em;
+
+         background: transparent;
+         &:focus {
+           border: 4px solid #0000ff;
+           transform: translate3d(0, 20%, 0);
+           + .container__items__item__label  {
+               font-size: 10px;
+               transform: translate3d(0, -10px, 0);
+           }
+         }
+       }
+       @include element('group') {
+         height: 80px;
+          position:relative;
+       }
+     }
+     @include element('button') {
+       border: none;
+       padding: 15px;
+       font-size: 19px;
+       &:hover {
+         background: #00b6ff;
+         cursor: pointer;
+         color: #ffffff;
+       }
+     }
+   }
+}

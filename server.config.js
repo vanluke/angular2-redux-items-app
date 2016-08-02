@@ -11,7 +11,7 @@ const conf = convict({
     doc: 'The IP address.',
     format: 'ipaddress',
     default: '127.0.0.1',
-    env: 'IP_ADDRESS',
+    env: 'IP_ADDRESS'
   },
   port: {
     doc: 'The port.',
@@ -32,17 +32,17 @@ const conf = convict({
     env: 'VERSION'
   },
   mongoDb: {
-   uri: {
-     doc: 'MongoDB config.',
-     format: String,
-     default: 'undefined',
-     env: 'MongoDB'
-   }
- }
+    uri: {
+      doc: 'MongoDB config.',
+      format: String,
+      default: 'undefined',
+      env: 'MongoDB'
+    }
+  }
 });
 
 const env = conf.get('env');
 conf.loadFile('./server/config/' + env + '.json');
-conf.validate({strict: true});
+conf.validate({ strict: true });
 
 export default conf;

@@ -1,4 +1,3 @@
-import jsonData from './items.json';
 import { MongoClient, ObjectId } from '../../mongoDb';
 import config from '../../../server.config';
 import parse from 'co-body';
@@ -15,46 +14,46 @@ const createId = (item, results) => {
 };
 
 const connect = (cb, params) => {
-  return new Promise ((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     MongoClient.connect(mongoDbConfig.uri, (err, db) => {
       assert.equal(null, err);
       cb(db, params)
       .then((result) => {
         db.close();
-        resolve (result);
-      }).catch((err) => {
+        resolve(result);
+      }).catch((error) => {
         db.close();
-        reject(err);
+        reject(error);
       });
     });
   });
 };
 
 const getItemsFromServer = (db) => {
-  return new Promise ((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve(db.collection(itemDocumentName).find().toArray());
-  })
+  });
 };
 
 const getItemFromServer = (db, id) => {
   const objectId = new ObjectId(id);
-  return new Promise ((resolve, reject) => {
+  return new Promise((resolve) => {
     const cursor = db.collection(itemDocumentName)
-              .find({ '_id': objectId });
+    .find({ '_id': objectId });
     cursor.each(function(err, doc) {
-         assert.equal(err, null);
-         resolve(doc);
+      assert.equal(err, null);
+      resolve(doc);
     });
   });
 };
 
 const _deleteItem = (db, id) => {
   const objectId = new ObjectId(id);
-  return new Promise ((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     db.collection(itemDocumentName)
-    .deleteOne({'_id': objectId }, function (err, results) {
+    .deleteOne({ '_id': objectId }, function(err, results) {
       if (err) {
-        reject (err);
+        reject(err);
       }
       resolve(results);
     });
@@ -62,11 +61,11 @@ const _deleteItem = (db, id) => {
 };
 
 const insertItem = (db, item) => {
-  return new Promise ((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     db.collection(itemDocumentName)
-    .insertOne(item, function (err, results) {
+    .insertOne(item, function(err, results) {
       if (err) {
-        reject (err);
+        reject(err);
       }
       const rectResp = createId(item, results);
       resolve(rectResp);
@@ -76,18 +75,17 @@ const insertItem = (db, item) => {
 
 const _updateItem = (db, item) => {
   const id = new ObjectId(item._id);
-  return new Promise ((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     db.collection(itemDocumentName)
-    .update({'_id': id },
-    {
+    .update({ '_id': id }, {
       $set: {
         'name': item.name,
         'description': item.description
       }
     },
-    item, function (err, results) {
+    item, function(err, results) {
       if (err) {
-        reject (err);
+        reject(err);
       }
       resolve(results);
     });
@@ -95,32 +93,30 @@ const _updateItem = (db, item) => {
 };
 
 const items = async function () {
-    const data = await connect (getItemsFromServer);
-    this.status = 200;
-    this.body = { items: data };
+  const data = await connect(getItemsFromServer);
+  this.status = 200;
+  this.body = { items: data };
 };
 
 const item = async function () {
-    const itemId = this.params.id;
-    const data = await connect (getItemFromServer, itemId);
-    this.status = 200;
-    console.log(data);
-    this.body = data;
+  const itemId = this.params.id;
+  const data = await connect(getItemFromServer, itemId);
+  this.status = 200;
+  this.body = data;
 };
 
 const createItem = async function () {
   const body = await parse(this);
-  const response = await connect (insertItem, body);
+  const response = await connect(insertItem, body);
   this.body = response;
   this.status = 201;
 };
 
 const updateItem = async function () {
-    const itemId = this.params.id;
-    const body = await parse(this);
-    const response = await connect(_updateItem, body);
-    this.body =  body;
-    this.status = 201;
+  const body = await parse(this);
+  await connect(_updateItem, body);
+  this.body =  body;
+  this.status = 201;
 };
 
 const deleteItem = async function () {
@@ -129,8 +125,8 @@ const deleteItem = async function () {
     this.status = 404;
     return;
   }
-  const response = await connect (_deleteItem, itemId);
+  await connect(_deleteItem, itemId);
   this.status = 204;
 };
 
-export { items, item, createItem, deleteItem, updateItem }
+export { items, item, createItem, deleteItem, updateItem };

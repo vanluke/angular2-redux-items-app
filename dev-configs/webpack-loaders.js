@@ -1,46 +1,46 @@
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-const makeFileLoader = function (pattern) {
+const makeFileLoader = function(pattern) {
   return {
     test: pattern,
     loader: 'file',
-    exclude: /node_modules/,
+    exclude: /node_modules/
   };
 };
 
 export const istanbulInstrumenter = {
   test: /^(.(?!\.test))*\.ts$/,
-  loader: 'istanbul-instrumenter-loader',
+  loader: 'istanbul-instrumenter-loader'
 };
 
 export const tslint = {
   test: /\.ts$/,
   loader: 'tslint',
-  exclude: /node_modules/,
+  exclude: /node_modules/
 };
 
 export const ts = {
   test: /\.ts$/,
   loader: 'awesome-typescript-loader',
-  exclude: /node_modules/,
+  exclude: /node_modules/
 };
 
 export const html = {
   test: /\.html$/,
   loader: 'html-loader',
-  exclude: /node_modules/,
+  exclude: /node_modules/
 };
 
 export const scss = {
   test: /\.scss/,
   loader: ExtractTextPlugin.extract('style', 'css!sass'),
-  exclude: /node_modules/,
+  exclude: /node_modules/
 };
 
 export const css = {
   test: /\.css$/,
   loader: 'style-loader!css-loader',
-  exclude: /node_modules/,
+  exclude: /node_modules/
 };
 
 export const json = {

@@ -1,12 +1,12 @@
 import koa from 'koa';
 import json from 'koa-json';
-import mount from 'koa-mount'
+import mount from 'koa-mount';
 import cors from 'koa-cors';
 import error from './error';
 import routes from './routes';
-import config from '../server.config';
+// import config from '../server.config';
 
-const version = config.get('version');
+// const version = config.get('version');
 
 const app = koa();
 

@@ -10,7 +10,7 @@ module.exports = (config) => {
   const coverage = config.singleRun ? ['coverage'] : [];
   config.set({
     frameworks: [
-      'jasmine',
+      'jasmine'
     ],
 
     plugins: [
@@ -31,18 +31,18 @@ module.exports = (config) => {
         pattern: '**/*.map',
         served: true,
         included: false,
-        watched: true,
-      },
+        watched: true
+      }
     ],
 
     preprocessors: {
       './src/tests.entry.ts': [
         'webpack',
-        'sourcemap',
+        'sourcemap'
       ],
       './src/**/!(*.test|tests.*).(ts|js)': [
-        'sourcemap',
-      ].concat(coverage),
+        'sourcemap'
+      ].concat(coverage)
     },
 
     webpack: {
@@ -51,32 +51,32 @@ module.exports = (config) => {
       devtool: 'inline-source-map',
       verbose: false,
       resolve: {
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
+        extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
       },
       module: {
         loaders: combinedLoaders(),
         postLoaders: config.singleRun
         ? [ loaders.istanbulInstrumenter ]
-        : [ ],
+        : [ ]
       },
       stats: { colors: true, reasons: true },
-      debug: false,
+      debug: false
     },
 
     webpackServer: {
-      noInfo: true, // prevent console spamming when running in Karma!
+      noInfo: true
     },
 
     reporters: ['spec'].concat(coverage),
 
     coverageReporter: {
       reporters: [
-        { type: 'json' },
+        { type: 'json' }
       ],
       dir: './coverage/',
       subdir: (browser) => {
         return browser.toLowerCase().split(/[ /-]/)[0]; // returns 'chrome'
-      },
+      }
     },
 
     port: 9999,
@@ -94,18 +94,16 @@ module.exports = (config) => {
 function combinedLoaders() {
   return Object.keys(loaders).reduce(function reduce(aggregate, k) {
     switch (k) {
-      case 'istanbulInstrumenter':
-      case 'tslint':
-        return aggregate;
-      case 'html': return aggregate;
-      case 'ts':
-      case 'tsTest':
+    case 'istanbulInstrumenter':
+    case 'tslint':
+      return aggregate;
+    case 'html': return aggregate;
+    case 'ts':
+    case 'tsTest':
       return aggregate.concat([ // force inline source maps
         Object.assign(loaders[k],
           { query: { babelOptions: { sourceMaps: 'both' } } })]);
-          default:
-          return aggregate.concat([loaders[k]]);
-        }
-      },
-      []);
-    }
+    default:
+      return aggregate.concat([loaders[k]]);
+    } }, []);
+}
